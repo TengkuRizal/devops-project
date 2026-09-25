@@ -46,6 +46,6 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/devops-project-app:latest
-            ghcr.io/${{ github.repository_owner }}/devops-project-app:${{ github.sha }}
+            ghcr.io/${{ tengkurizal }}/devops-project-app:latest
+            ghcr.io/${{ tengkurizal }}/devops-project-app:${{ github.sha }}
         
