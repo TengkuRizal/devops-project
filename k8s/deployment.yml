@@ -16,7 +16,7 @@ spec:
         - name: gitlab-registry-cred 
       containers:
         - name: devops-project-app
-          image: 10.10.1.101:5050/kujal/devops-project-app:v1
+          image: 10.10.1.101:5050/kujal/devops-project-app:v2
           ports:
             - containerPort: 5001
           livenessProbe:
