@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-project-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: devops-project-app
+  template:
+    metadata:
+      labels:
+        app: devops-project-app
+    spec:
+      imagePullSecrets:
+        - name: gitlab-registry-cred 
+      containers:
+        - name: devops-project-app
+          image: 10.10.1.101:5050/kujal/devops-project-app:v1
+          ports:
+            - containerPort: 5001
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5001
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health   
+              port: 5001
+            initialDelaySeconds: 3
