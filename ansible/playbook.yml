@@ -1,0 +1,44 @@
+---
+- name: Kurbenetes node health check
+  hosts: k8s_nodes
+  gather_facts: false
+
+  tasks:
+    - name: Check disk space
+      command: df -h /
+      register: disk_space
+      changed_when: false
+
+    - name: Display disk space
+      debug:
+        var: disk_space.stdout_lines
+
+    - name: Check kubectl service status
+      systemd:
+        name: kubelet
+        state: started
+      register: kubelet_status
+
+    - name: Display kubelet status
+      debug:
+        msg: "kubelet is {{ kubelet_status.status.ActiveState }}"
+
+    - name: Check containerd service status
+      systemd:
+        name: containerd
+        state: started
+      register: containerd_status
+
+    - name: Display 
+      debug:
+        msg: "containerd is {{ containerd_status.status.ActiveState }}"
+
+    - name: Check memory usage
+      command: free -h
+      register: memory_usage
+      changed_when: false
+
+    - name: Display memory usage
+      debug:
+        var: memory_usage.stdout_lines
+        
